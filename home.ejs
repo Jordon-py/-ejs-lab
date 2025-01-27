@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Byte Bistro</title>
+  <meta charset="UTF-8" />
+  <title><%= title %></title>
 </head>
 <body>
-    <h1>Welcome to <%= restaurantName %>!</h1>
-    <p>Experience the best eco-friendly dishes in town.</p>
+  <%- include('partials/nav') %>
+
+  <h1>Welcome to <%= title %>!</h1>
+  <p>Your one-stop destination for healthy, delicious meals!</p>
 </body>
 </html>
