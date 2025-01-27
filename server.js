@@ -1,12 +1,7 @@
-//  ----------------------------------    IMPORTS AND CONSTANTS    ------------------------------------//
-const ejs = require('ejs');
+// ----------------------------------    IMPORTS AND CONSTANTS    ------------------------------------//
 const express = require('express');
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
-const express = require('express');
+const PORT = 3000;
 const app = express();
-app.use(express.json());            // parse incoming JSON
-
 
 const RESTAURANT = {
   name: 'The Green Byte Bistro',
@@ -22,7 +17,7 @@ const RESTAURANT = {
       category: 'mains',
       details: 'A vegetarian burger made with a quinoa and mushroom patty, it will take you to another realm.'
     },
-    { 
+    {
       id: 2,
       name: 'Binary Berry Cheesecake',
       price: 10.11,
@@ -30,47 +25,16 @@ const RESTAURANT = {
       category: 'desserts',
       details: 'A creamy cheesecake bursting with flavor. A mix of berries in every byte.'
     },
-    { 
-      id: 3,
-      name: 'Recursive Rigatoni',
-      price: 17.00,
-      rating: 5,
-      category: 'mains',
-      details: 'A classic rigatoni pasta dish, layered with rich tomato sauce and herbs. You\'ll keep coming back for more.'
-    },
-    { 
-      id: 4,
-      name: 'Pumpkin Pi Squared',
-      price: 3.14,
-      rating: 5,
-      category: 'desserts',
-      details: 'A delightful pumpkin dessert, squared and spiced to perfection.'
-    },
-    { 
-      id: 5,
-      name: 'Fibonacci String Bean Fries',
-      price: 11.23,
-      rating: 5,
-      category: 'sides',
-      details: 'Crispy and lightly seasoned string bean fries, served in a pattern for a fun twist.'
-    }
+    // ...
   ]
 };
 
 /* ---------------------------------------------------  Root Route  ------------------------------------- */
-
-
-app.get('/', (req, res) => {    // ROOT URL
-  res.send('Hello World!')
-})
-
+app.get('/', (req, res) => {                        
+  res.render('home', { restaurant: RESTAURANT });
+});
 
 /** -----------------------------------------  SERVER AND TEMPLATING ENGINE  ------------------ */
-require('dotenv').config();
-require('./config/database'); // triggers the connection code
-app.set('view engine', ejs);
-
-
-app.listen(port, () => {
-  console.log(`server running on ${port}`)
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
