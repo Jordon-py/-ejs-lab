@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><%= restaurant.name ></title>
-    </head>
-    <body>
-        <h1>Full Menu</h1>
-        <ul>
-            <% menuItems.forEach((item) => { %>
-            <li>
-                <strong><%= item.name %></strong> - $<%= item.price %><br />
-                Rating: <%= item.rating %> / 5<br />
-                Category: <%= item.category %><br />
-                Details: <%= item.details %>
-            </li>
-            <% }) %>
-        </ul>
-    </body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Dynamically set the page title using restaurant.name -->
+    <title><%= restaurant.name %></title>
+  </head>
+  <body>
+    <h1>Full Menu</h1>
+    <ul>
+      <% menuItems.forEach((item) => { %>
+        <li>
+          <strong><%= item.name %></strong> - $<%= item.price %><br />
+          Rating: <%= item.rating %> / 5<br />
+          Category: <%= item.category %><br />
+          Details: <%= item.details %>
+        </li>
+      <% }) %>
+    </ul>
+  </body>
 </html>

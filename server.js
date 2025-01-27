@@ -1,8 +1,10 @@
 const express = require('express');
 const path = require('path');
-const { title } = require('process');
+
 const PORT = 3000;
 const app = express();
+
+// ------------------------------------------------------ Restaurant Data
 const RESTAURANT = {
   name: 'The Green Byte Bistro',
   isOpen: true,
@@ -50,35 +52,35 @@ const RESTAURANT = {
       details: 'Crispy and lightly seasoned string bean fries, served in a pattern for a fun twist.'
     }
   ]
-}
-
-const MENU = RESTAURANT.menu;
-const { name, isOpen, address, phone } = RESTAURANT;
+};
 
 
-// ------------------------------------------------------Set EJS as templating engine
+// ------------------------------------------------------ Set EJS as templating engine
 app.set('view engine', 'ejs');
-//  ---------------------------------------------------- Serve static files (CSS, images, etc.) from "public" folder
+
+// ------------------------------------------------------ Serve static files (CSS, images, etc.) from "public" folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ---------------------------------------------------- Parse POST request data ------------------------
+// ------------------------------------------------------ Parse incoming request data (if needed for forms, etc.)
+// app.use(express.urlencoded({ extended: true }));
+
+// ------------------------------------------------------ Routes
 app.get('/', (req, res) => {
+  // Home route
   res.render('home', {
     restaurant: RESTAURANT
   });
 });
-  
-
 
 app.get('/menu', (req, res) => {
+  // Menu route
   res.render('menu', {
+    restaurant: RESTAURANT,
     menuItems: RESTAURANT.menu
   });
 });
 
-//  ---------------------------------------------------- Start the server
-
-
+// ------------------------------------------------------ Start the server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
