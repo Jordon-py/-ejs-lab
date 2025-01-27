@@ -1,7 +1,13 @@
 // ----------------------------------    IMPORTS AND CONSTANTS    ------------------------------------//
 const express = require('express');
-const PORT = 3000;
 const app = express();
+const indexRoutes = require('./routes/index');
+
+app.set('view engine', 'ejs');
+app.use('/', indexRoutes);
+
+
+
 
 const RESTAURANT = {
   name: 'The Green Byte Bistro',
@@ -9,7 +15,7 @@ const RESTAURANT = {
   address: '742 Evergreen Rd, Mapleview, OS 45502',
   phone: '555-321-9876',
   menu: [
-    { 
+    {
       id: 1,
       name: 'Quantum Quinoa Mushroom Burger',
       price: 13.00,
@@ -30,11 +36,10 @@ const RESTAURANT = {
 };
 
 /* ---------------------------------------------------  Root Route  ------------------------------------- */
-app.get('/', (req, res) => {                        
-  res.render('home', { restaurant: RESTAURANT });
+app.get('/', (req, res) => {
+  res.render('/home', { restaurant: RESTAURANT });
 });
 
 /** -----------------------------------------  SERVER AND TEMPLATING ENGINE  ------------------ */
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
