@@ -1,7 +1,15 @@
-const { localsName, name } = require('ejs');
+//  ----------------------------------    IMPORTS AND CONSTANTS    ------------------------------------//
+
+import { locals, name } from 'ejs';
+import express from 'express';
+import { Schema, model } from 'mongoose';
+
 const express = require('express');
 const app = express();
-const port = 3000;
+app.use(express.json());            // parse incoming JSON
+require('dotenv').config();       // connect to DB
+require('./config/database');
+
 const RESTAURANT = {
   name: 'The Green Byte Bistro',
   isOpen: true,
@@ -53,21 +61,63 @@ const RESTAURANT = {
 
 
 
-/* ---------------------------------------------------  Root Route  ------------------------------------- */
-app.get('/', (req, res) => {
-  res.render('home', RESTAURANT, (err, html) => {
-    const { name, isOpen, address, phone, menu } = RESTAURANT;
-                                                                                                                                                                                                                                                                                                                                                 
-  })
+
+/*  -----------------------------------------   INITIALIZE 'APPLICATION' SCHEMA & EMBED IT INTO 'USER' SCHEMA   ----------------------  */
+
+const applicationSchema = new Schema({
+  company: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  notes: {
+    type: String,
+  },
+  postingLink: {
+    type: String,
+  },
+  status: {
+    type: String,
+    enum: ['interested', 'applied', 'interviewing', 'rejected', 'accepted'],
+    default: 'interested'
+  },
 });
 
+const userSchema = new Schema({
+  username: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  applications: [applicationSchema] // Embedding here
+});
+
+export default model('User', userSchema);
+console.log(`check if embedding worked , ${userSchema}`)
+
+
+
+
+/* ---------------------------------------------------  Root Route  ------------------------------------- */
+app.set('view engine', 'ejs');
+
+app.get('/', (req, res) => {    // ROOT URL
+  res.send('Hello World!')
+})
 
 
 /** -----------------------------------------  SERVER AND TEMPLATING ENGINE  ------------------ */
-app.set('view engine', 'ejs');
+require('dotenv').config();
+import './config/database'; // triggers the connection code
+
 
 
 app.listen(port, () => {
-  console.log(`server running on ${port}`);
-  
-})
+  console.log(`server running on ${port}`)
+});
