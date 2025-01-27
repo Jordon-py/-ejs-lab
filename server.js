@@ -1,9 +1,6 @@
 const express = require('express');
 const path = require('path');
 const PORT = 3000;
-// Import route files
-const homeRoutes = require('./routes/home');
-const menuRoutes = require('./routes/menu');
 
 const app = express();
 
@@ -20,13 +17,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-//- ---------------------------------------------------- Use the routes
-app.use('/', homeRoutes);
-app.use('/menu', menuRoutes);
-
-
-
 //  ---------------------------------------------------- Start the server
+app.get('/', (req, res) => {
+  res.render('home');
+});
+
+
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
