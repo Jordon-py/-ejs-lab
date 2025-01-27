@@ -55,32 +55,43 @@ const RESTAURANT = {
 };
 
 
-// ------------------------------------------------------ Set EJS as templating engine
 app.set('view engine', 'ejs');
-
-// ------------------------------------------------------ Serve static files (CSS, images, etc.) from "public" folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ------------------------------------------------------ Parse incoming request data (if needed for forms, etc.)
-// app.use(express.urlencoded({ extended: true }));
+// ------------------------------------ ROUTES
 
-// ------------------------------------------------------ Routes
+// 1) Home Page
 app.get('/', (req, res) => {
-  // Home route
   res.render('home', {
     restaurant: RESTAURANT
   });
 });
 
+// 2) Full Menu
 app.get('/menu', (req, res) => {
-  // Menu route
   res.render('menu', {
     restaurant: RESTAURANT,
     menuItems: RESTAURANT.menu
   });
 });
 
-// ------------------------------------------------------ Start the server
+// 3) Category Pages (e.g., /menu/mains, /menu/desserts, /menu/sides)
+app.get('/menu/:category', (req, res) => {
+  const catParam = req.params.category.toLowerCase(); 
+  // Filter items matching the category in the URL
+  const filteredItems = RESTAURANT.menu.filter(item => item.category === catParam);
+  
+  // Capitalize the category for display purposes
+  const categoryTitle = catParam.charAt(0).toUpperCase() + catParam.slice(1);
+
+  res.render('category', {
+    restaurant: RESTAURANT,
+    menuItems: filteredItems,
+    category: categoryTitle
+  });
+});
+
+// ------------------------------------ START SERVER
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

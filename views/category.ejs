@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title><%= category %> | <%= restaurant.name %></title>
+  </head>
+  <body>
+    <%- include('partials/nav') %>
+    <h1><%= category %></h1>
+    <% if (menuItems.length > 0) { %>
+      <ul>
+        <% menuItems.forEach(item => { %>
+          <li>
+            <strong><%= item.name %></strong> - $<%= item.price %><br>
+            Rating: <%= item.rating %> / 5<br>
+            Details: <%= item.details %>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No items found for this category.</p>
+    <% } %>
+  </body>
+</html>
